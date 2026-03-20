@@ -51,15 +51,15 @@ export function CaseAnalyzer() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Case Analyzer</h1>
-      <p className="text-gray-600 mb-8">
+      <h1 className="text-3xl font-bold text-white mb-6">Case Analyzer</h1>
+      <p className="text-gray-400 mb-8">
         Upload legal documents, evidence photos, or contracts for instant AI analysis using Gemini Pro.
       </p>
 
-      <div className="bg-white shadow sm:rounded-lg p-6 mb-8">
-        <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-12 text-center hover:bg-gray-50 transition-colors cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-          <Upload className="h-12 w-12 text-gray-400 mb-4" />
-          <p className="text-sm text-gray-600">Click to upload an image or document</p>
+      <div className="bg-gray-900 shadow-xl sm:rounded-xl p-6 mb-8 border border-gray-800">
+        <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-700 rounded-lg p-12 text-center hover:bg-gray-800 transition-colors cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+          <Upload className="h-12 w-12 text-gray-500 mb-4" />
+          <p className="text-sm text-gray-400">Click to upload an image or document</p>
           <input
             type="file"
             ref={fileInputRef}
@@ -71,8 +71,8 @@ export function CaseAnalyzer() {
 
         {image && (
           <div className="mt-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Preview</h3>
-            <img src={image} alt="Uploaded evidence" className="max-h-96 rounded-lg shadow-sm border border-gray-200" />
+            <h3 className="text-lg font-medium text-white mb-4">Preview</h3>
+            <img src={image} alt="Uploaded evidence" className="max-h-96 rounded-lg shadow-sm border border-gray-700" />
             <div className="mt-4 flex justify-end">
               <button
                 onClick={analyzeImage}
@@ -97,11 +97,11 @@ export function CaseAnalyzer() {
       </div>
 
       {analysis && (
-        <div className="bg-white shadow sm:rounded-lg overflow-hidden">
-          <div className="px-4 py-5 sm:px-6 border-b border-gray-200">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Analysis Results</h3>
+        <div className="bg-gray-900 shadow-xl sm:rounded-xl overflow-hidden border border-gray-800">
+          <div className="px-4 py-5 sm:px-6 border-b border-gray-800">
+            <h3 className="text-lg leading-6 font-medium text-white">Analysis Results</h3>
           </div>
-          <div className="px-4 py-5 sm:p-6 prose max-w-none">
+          <div className="px-4 py-5 sm:p-6 prose prose-invert max-w-none">
             <ReactMarkdown>{analysis}</ReactMarkdown>
           </div>
         </div>

@@ -1,5 +1,5 @@
 {
-  "name": "Lexi - AI Legal Advisor",
+  "name": "NeroLegal AI",
   "description": "Comprehensive legal advisor app with access to 9M+ legal decisions, document drafting, voice consultation, and local resources.",
   "requestFramePermissions": [
     "camera",

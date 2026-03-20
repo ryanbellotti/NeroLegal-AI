@@ -81,11 +81,11 @@ export function AdvancedCaseAnalysis() {
 
   return (
     <div className="max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-        <Target className="h-8 w-8 text-indigo-600 mr-3" />
+      <h1 className="text-3xl font-bold text-white mb-6 flex items-center">
+        <Target className="h-8 w-8 text-indigo-500 mr-3" />
         Advanced Case Strategy & Analysis
       </h1>
-      <p className="text-gray-600 mb-8">
+      <p className="text-gray-400 mb-8">
         Break down legal decisions, identify key arguments, assess strengths/weaknesses, and develop strategic responses with counterarguments and precedents.
       </p>
 
@@ -94,7 +94,7 @@ export function AdvancedCaseAnalysis() {
           <textarea
             value={caseDetails}
             onChange={(e) => setCaseDetails(e.target.value)}
-            className="block w-full p-4 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm min-h-[160px]"
+            className="block w-full p-4 border border-gray-700 bg-gray-900 text-white rounded-lg focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm min-h-[160px] shadow-xl"
             placeholder="Paste the legal decision, case facts, or scenario you want to strategically break down..."
           />
         </div>
@@ -117,29 +117,29 @@ export function AdvancedCaseAnalysis() {
       </form>
 
       {response && (
-        <div className="bg-white shadow sm:rounded-lg overflow-hidden">
-          <div className="px-4 py-5 sm:px-6 border-b border-gray-200 flex justify-between items-center">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Strategic Breakdown</h3>
+        <div className="bg-gray-900 shadow-xl sm:rounded-xl overflow-hidden border border-gray-800">
+          <div className="px-4 py-5 sm:px-6 border-b border-gray-800 flex justify-between items-center bg-gray-900/50">
+            <h3 className="text-lg leading-6 font-medium text-white">Strategic Breakdown</h3>
             <button
               onClick={saveAnalysis}
-              className="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              className="inline-flex items-center px-3 py-1.5 border border-gray-700 shadow-sm text-sm font-medium rounded-md text-gray-300 bg-gray-800 hover:bg-gray-700"
             >
               <Save className="h-4 w-4 mr-2" />
               Save Strategy
             </button>
           </div>
-          <div className="px-4 py-5 sm:p-6 prose max-w-none">
+          <div className="px-4 py-5 sm:p-6 prose prose-invert max-w-none text-gray-300">
             <ReactMarkdown>{response}</ReactMarkdown>
           </div>
           
           {citations.length > 0 && (
-            <div className="px-4 py-4 sm:px-6 bg-gray-50 border-t border-gray-200">
-              <h4 className="text-sm font-medium text-gray-900 mb-3">Cited Precedents & Sources:</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
+            <div className="px-4 py-4 sm:px-6 bg-gray-900/50 border-t border-gray-800">
+              <h4 className="text-sm font-medium text-white mb-3">Cited Precedents & Sources:</h4>
+              <ul className="space-y-2 text-sm text-gray-400">
                 {citations.map((chunk, idx) => (
                   chunk.web?.uri && (
                     <li key={idx}>
-                      <a href={chunk.web.uri} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline">
+                      <a href={chunk.web.uri} target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300 hover:underline">
                         {chunk.web.title || chunk.web.uri}
                       </a>
                     </li>

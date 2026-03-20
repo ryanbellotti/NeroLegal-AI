@@ -164,25 +164,25 @@ export function VoiceConsultation() {
 
   return (
     <div className="max-w-3xl mx-auto text-center">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6 flex items-center justify-center">
-        <Volume2 className="h-8 w-8 text-purple-600 mr-3" />
+      <h1 className="text-3xl font-bold text-white mb-6 flex items-center justify-center">
+        <Volume2 className="h-8 w-8 text-purple-500 mr-3" />
         Live Voice Consultation
       </h1>
-      <p className="text-gray-600 mb-12 max-w-2xl mx-auto">
+      <p className="text-gray-400 mb-12 max-w-2xl mx-auto">
         Have a real-time conversation with our AI legal advisor. Speak naturally, and the AI will respond instantly. Perfect for brainstorming and preliminary legal guidance.
       </p>
 
       {error && (
-        <div className="mb-8 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md flex items-center justify-center">
+        <div className="mb-8 bg-red-900/50 border border-red-500/50 text-red-200 px-4 py-3 rounded-md flex items-center justify-center">
           <AlertCircle className="h-5 w-5 mr-2" />
           {error}
         </div>
       )}
 
-      <div className="bg-white shadow-xl rounded-3xl p-12 border border-gray-100 flex flex-col items-center justify-center min-h-[400px]">
+      <div className="bg-gray-900 shadow-2xl rounded-3xl p-12 border border-gray-800 flex flex-col items-center justify-center min-h-[400px]">
         
         <div className={`relative flex items-center justify-center w-48 h-48 rounded-full mb-8 transition-all duration-500 ${
-          connected ? 'bg-purple-100 shadow-[0_0_60px_rgba(168,85,247,0.4)]' : 'bg-gray-100'
+          connected ? 'bg-purple-900/50 shadow-[0_0_60px_rgba(168,85,247,0.4)]' : 'bg-gray-800'
         }`}>
           {connected && (
             <>
@@ -190,13 +190,13 @@ export function VoiceConsultation() {
               <div className="absolute inset-0 rounded-full border-4 border-purple-500 opacity-40 animate-ping" style={{ animationDuration: '3s', animationDelay: '0.5s' }}></div>
             </>
           )}
-          <Mic className={`h-20 w-20 ${connected ? 'text-purple-600' : 'text-gray-400'}`} />
+          <Mic className={`h-20 w-20 ${connected ? 'text-purple-400' : 'text-gray-600'}`} />
         </div>
 
         {connected ? (
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">Connected</h3>
-            <p className="text-gray-500 mb-8">Speak now to consult with Lexi AI.</p>
+            <h3 className="text-2xl font-bold text-white mb-2">Connected</h3>
+            <p className="text-gray-400 mb-8">Speak now to consult with NeroLegal AI.</p>
             <button
               onClick={disconnect}
               className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors"
@@ -207,8 +207,8 @@ export function VoiceConsultation() {
           </div>
         ) : (
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">Ready to Start</h3>
-            <p className="text-gray-500 mb-8">Click the button below to begin your session.</p>
+            <h3 className="text-2xl font-bold text-white mb-2">Ready to Start</h3>
+            <p className="text-gray-400 mb-8">Click the button below to begin your session.</p>
             <button
               onClick={connect}
               disabled={connecting}

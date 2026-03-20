@@ -78,9 +78,9 @@ const features = [
 export function Dashboard() {
   return (
     <div className="max-w-7xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Welcome to Lexi AI</h1>
-      <p className="text-lg text-gray-600 mb-12">
-        Select a tool below to begin your legal research, drafting, or consultation.
+      <h1 className="text-4xl font-extrabold text-white mb-4 tracking-tight">Welcome to NeroLegal AI</h1>
+      <p className="text-lg text-gray-400 mb-12 max-w-2xl">
+        Select a state-of-the-art tool below to begin your legal research, drafting, or strategic consultation.
       </p>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -88,20 +88,21 @@ export function Dashboard() {
           <Link
             key={feature.name}
             to={feature.href}
-            className="group relative bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all hover:border-indigo-300"
+            className="group relative bg-gray-900 rounded-2xl shadow-lg border border-gray-800 p-6 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 hover:border-indigo-500/50 overflow-hidden"
           >
-            <div>
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="relative z-10">
               <span
-                className={`inline-flex rounded-lg p-3 ring-4 ring-white ${feature.color} bg-opacity-10 text-${feature.color.replace('bg-', '')}`}
+                className={`inline-flex rounded-xl p-3 ring-1 ring-white/10 ${feature.color} bg-opacity-20 text-${feature.color.replace('bg-', '')} shadow-inner`}
               >
-                <feature.icon className="h-6 w-6" aria-hidden="true" />
+                <feature.icon className="h-7 w-7" aria-hidden="true" />
               </span>
             </div>
-            <div className="mt-8">
-              <h3 className="text-lg font-medium text-gray-900 group-hover:text-indigo-600 transition-colors">
+            <div className="mt-8 relative z-10">
+              <h3 className="text-xl font-semibold text-white group-hover:text-indigo-400 transition-colors">
                 {feature.name}
               </h3>
-              <p className="mt-2 text-sm text-gray-500">
+              <p className="mt-3 text-sm text-gray-400 leading-relaxed">
                 {feature.description}
               </p>
             </div>

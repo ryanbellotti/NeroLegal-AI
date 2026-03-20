@@ -116,20 +116,20 @@ export function QuickQA() {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+      <h1 className="text-3xl font-bold text-white mb-6 flex items-center">
         <Zap className="h-8 w-8 text-yellow-500 mr-3" />
         Quick Q&A
       </h1>
-      <p className="text-gray-600 mb-8">
+      <p className="text-gray-400 mb-8">
         Get fast answers to simple legal questions. Use your microphone to ask, and listen to the response.
       </p>
 
-      <div className="bg-white shadow sm:rounded-lg p-6 mb-8">
+      <div className="bg-gray-900 shadow-xl sm:rounded-xl p-6 mb-8 border border-gray-800">
         <div className="flex items-center space-x-4 mb-4">
           <button
             onClick={recording ? stopRecording : startRecording}
             className={`p-4 rounded-full flex items-center justify-center transition-colors ${
-              recording ? 'bg-red-100 text-red-600 hover:bg-red-200' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              recording ? 'bg-red-900/50 text-red-400 hover:bg-red-900/70 border border-red-500/50' : 'bg-gray-800 text-gray-400 hover:bg-gray-700 border border-gray-700'
             }`}
           >
             {recording ? <Square className="h-6 w-6" /> : <Mic className="h-6 w-6" />}
@@ -140,7 +140,7 @@ export function QuickQA() {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3 border"
+              className="block w-full border-gray-700 bg-gray-800 text-white rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3 border"
               placeholder="Type your question or use the microphone..."
             />
           </div>
@@ -157,16 +157,16 @@ export function QuickQA() {
       </div>
 
       {response && (
-        <div className="bg-white shadow sm:rounded-lg overflow-hidden">
-          <div className="px-4 py-5 sm:px-6 border-b border-gray-200 flex justify-between items-center">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Answer</h3>
+        <div className="bg-gray-900 shadow-xl sm:rounded-xl overflow-hidden border border-gray-800">
+          <div className="px-4 py-5 sm:px-6 border-b border-gray-800 flex justify-between items-center">
+            <h3 className="text-lg leading-6 font-medium text-white">Answer</h3>
             {audioUrl && (
               <audio controls src={audioUrl} autoPlay className="h-8">
                 Your browser does not support the audio element.
               </audio>
             )}
           </div>
-          <div className="px-4 py-5 sm:p-6 text-gray-800 text-lg">
+          <div className="px-4 py-5 sm:p-6 text-gray-300 text-lg">
             {response}
           </div>
         </div>

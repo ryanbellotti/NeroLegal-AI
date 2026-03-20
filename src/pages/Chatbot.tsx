@@ -75,41 +75,41 @@ export function Chatbot() {
     <div className="max-w-4xl mx-auto h-[calc(100vh-8rem)] flex flex-col">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 flex items-center">
-            <MessageSquare className="h-8 w-8 text-indigo-600 mr-3" />
+          <h1 className="text-3xl font-bold text-white flex items-center">
+            <MessageSquare className="h-8 w-8 text-indigo-500 mr-3" />
             AI Legal Chatbot
           </h1>
-          <p className="text-gray-600 mt-1">
+          <p className="text-gray-400 mt-1">
             General legal chat assistant powered by Gemini Pro.
           </p>
         </div>
         <button
           onClick={saveChat}
           disabled={messages.length === 0}
-          className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
+          className="inline-flex items-center px-4 py-2 border border-gray-700 shadow-sm text-sm font-medium rounded-md text-gray-300 bg-gray-800 hover:bg-gray-700 disabled:opacity-50"
         >
           <Save className="h-4 w-4 mr-2" />
           Save Chat
         </button>
       </div>
 
-      <div className="flex-1 bg-white shadow sm:rounded-lg overflow-hidden flex flex-col">
+      <div className="flex-1 bg-gray-900 shadow-xl sm:rounded-xl overflow-hidden flex flex-col border border-gray-800">
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-gray-500">
-              <MessageSquare className="h-12 w-12 mb-4 text-gray-300" />
+              <MessageSquare className="h-12 w-12 mb-4 text-gray-700" />
               <p>Start a conversation by typing your legal question below.</p>
             </div>
           ) : (
             messages.map((msg, idx) => (
               <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[80%] rounded-lg px-5 py-4 ${
-                  msg.role === 'user' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-900'
+                <div className={`max-w-[80%] rounded-2xl px-5 py-4 ${
+                  msg.role === 'user' ? 'bg-indigo-600 text-white' : 'bg-gray-800 text-gray-200 border border-gray-700'
                 }`}>
                   {msg.role === 'user' ? (
                     <p>{msg.text}</p>
                   ) : (
-                    <div className="prose prose-sm max-w-none">
+                    <div className="prose prose-sm prose-invert max-w-none">
                       <ReactMarkdown>{msg.text}</ReactMarkdown>
                     </div>
                   )}
@@ -119,23 +119,23 @@ export function Chatbot() {
           )}
           {loading && (
             <div className="flex justify-start">
-              <div className="bg-gray-100 rounded-lg px-5 py-4 flex items-center space-x-2">
-                <Loader2 className="h-5 w-5 animate-spin text-gray-500" />
-                <span className="text-gray-500 text-sm">Thinking...</span>
+              <div className="bg-gray-800 border border-gray-700 rounded-2xl px-5 py-4 flex items-center space-x-2">
+                <Loader2 className="h-5 w-5 animate-spin text-gray-400" />
+                <span className="text-gray-400 text-sm">Thinking...</span>
               </div>
             </div>
           )}
           <div ref={messagesEndRef} />
         </div>
 
-        <div className="p-4 border-t border-gray-200 bg-gray-50">
+        <div className="p-4 border-t border-gray-800 bg-gray-900/50">
           <form onSubmit={handleSend} className="flex space-x-4">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type your message..."
-              className="flex-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3 border"
+              className="flex-1 block w-full border-gray-700 bg-gray-800 text-white rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-3 border"
             />
             <button
               type="submit"

@@ -75,12 +75,12 @@ export function LocalResources() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Local Legal Resources</h1>
-      <p className="text-gray-600 mb-8">
+      <h1 className="text-3xl font-bold text-white mb-6">Local Legal Resources</h1>
+      <p className="text-gray-400 mb-8">
         Find courts, law firms, and legal aid near you using Google Maps Grounding.
       </p>
 
-      <div className="bg-white shadow sm:rounded-lg p-6 mb-8">
+      <div className="bg-gray-900 shadow-xl sm:rounded-xl p-6 mb-8 border border-gray-800">
         <form onSubmit={handleSearch}>
           <div className="flex items-center space-x-4 mb-4">
             <div className="flex-1 relative">
@@ -91,7 +91,7 @@ export function LocalResources() {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="block w-full pl-10 pr-3 py-3 border border-gray-700 bg-gray-800 text-white rounded-lg focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="e.g., Family law attorneys, Federal courthouse, Legal aid clinic..."
               />
             </div>
@@ -104,11 +104,11 @@ export function LocalResources() {
             </button>
           </div>
           {location ? (
-            <p className="text-sm text-green-600 flex items-center">
+            <p className="text-sm text-emerald-400 flex items-center mt-4">
               <Navigation className="h-4 w-4 mr-1" /> Using your current location
             </p>
           ) : (
-            <p className="text-sm text-yellow-600 flex items-center">
+            <p className="text-sm text-yellow-500 flex items-center mt-4">
               <Navigation className="h-4 w-4 mr-1" /> Location access denied. Results may not be localized.
             </p>
           )}
@@ -116,21 +116,21 @@ export function LocalResources() {
       </div>
 
       {response && (
-        <div className="bg-white shadow sm:rounded-lg overflow-hidden">
-          <div className="px-4 py-5 sm:px-6 border-b border-gray-200">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Results</h3>
+        <div className="bg-gray-900 shadow-xl sm:rounded-xl overflow-hidden border border-gray-800">
+          <div className="px-4 py-5 sm:px-6 border-b border-gray-800">
+            <h3 className="text-lg leading-6 font-medium text-white">Results</h3>
           </div>
-          <div className="px-4 py-5 sm:p-6 prose max-w-none">
+          <div className="px-4 py-5 sm:p-6 prose prose-invert max-w-none">
             <ReactMarkdown>{response}</ReactMarkdown>
           </div>
           
           {links.length > 0 && (
-            <div className="px-4 py-4 sm:px-6 bg-gray-50 border-t border-gray-200">
-              <h4 className="text-sm font-medium text-gray-900 mb-3">Map Links:</h4>
-              <ul className="space-y-2 text-sm text-indigo-600">
+            <div className="px-4 py-4 sm:px-6 bg-gray-800/50 border-t border-gray-800">
+              <h4 className="text-sm font-medium text-white mb-3">Map Links:</h4>
+              <ul className="space-y-2 text-sm text-indigo-400">
                 {links.map((link, idx) => (
                   <li key={idx}>
-                    <a href={link} target="_blank" rel="noopener noreferrer" className="hover:underline flex items-center">
+                    <a href={link} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-300 hover:underline flex items-center">
                       <MapPin className="h-4 w-4 mr-2" />
                       View on Google Maps
                     </a>

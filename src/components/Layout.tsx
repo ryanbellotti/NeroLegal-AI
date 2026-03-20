@@ -36,12 +36,12 @@ export function Layout() {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-950 flex text-gray-100 font-sans">
       {/* Sidebar */}
-      <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
-        <div className="h-16 flex items-center px-6 border-b border-gray-200">
-          <Scale className="h-8 w-8 text-indigo-600 mr-3" />
-          <span className="text-xl font-bold text-gray-900">Lexi AI</span>
+      <div className="w-64 bg-gray-900 border-r border-gray-800 flex flex-col shadow-xl z-10">
+        <div className="h-16 flex items-center px-6 border-b border-gray-800">
+          <Scale className="h-8 w-8 text-indigo-500 mr-3" />
+          <span className="text-xl font-bold text-white tracking-tight">NeroLegal AI</span>
         </div>
         
         <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
@@ -53,15 +53,15 @@ export function Layout() {
                 to={item.href}
                 className={clsx(
                   isActive
-                    ? 'bg-indigo-50 text-indigo-600'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-                  'group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors'
+                    ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20'
+                    : 'text-gray-400 hover:bg-gray-800 hover:text-gray-200 border border-transparent',
+                  'group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200'
                 )}
               >
                 <item.icon
                   className={clsx(
-                    isActive ? 'text-indigo-600' : 'text-gray-400 group-hover:text-gray-500',
-                    'flex-shrink-0 -ml-1 mr-3 h-5 w-5'
+                    isActive ? 'text-indigo-400' : 'text-gray-500 group-hover:text-gray-300',
+                    'flex-shrink-0 -ml-1 mr-3 h-5 w-5 transition-colors'
                   )}
                   aria-hidden="true"
                 />
@@ -71,27 +71,27 @@ export function Layout() {
           })}
         </nav>
 
-        <div className="p-4 border-t border-gray-200">
+        <div className="p-4 border-t border-gray-800 bg-gray-900/50">
           <div className="flex items-center mb-4">
             <div className="flex-shrink-0">
               {user?.photoURL ? (
-                <img className="h-8 w-8 rounded-full" src={user.photoURL} alt="" referrerPolicy="no-referrer" />
+                <img className="h-9 w-9 rounded-full ring-2 ring-gray-800" src={user.photoURL} alt="" referrerPolicy="no-referrer" />
               ) : (
-                <div className="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                  <span className="text-indigo-600 font-medium text-sm">
+                <div className="h-9 w-9 rounded-full bg-indigo-900 flex items-center justify-center ring-2 ring-gray-800">
+                  <span className="text-indigo-300 font-medium text-sm">
                     {user?.email?.[0].toUpperCase()}
                   </span>
                 </div>
               )}
             </div>
             <div className="ml-3 truncate">
-              <p className="text-sm font-medium text-gray-700 truncate">{user?.displayName || 'User'}</p>
+              <p className="text-sm font-medium text-gray-200 truncate">{user?.displayName || 'User'}</p>
               <p className="text-xs text-gray-500 truncate">{user?.email}</p>
             </div>
           </div>
           <button
             onClick={signOut}
-            className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+            className="w-full flex items-center justify-center px-4 py-2.5 border border-gray-700 shadow-sm text-sm font-medium rounded-lg text-gray-300 bg-gray-800 hover:bg-gray-700 hover:text-white transition-all duration-200"
           >
             <LogOut className="h-4 w-4 mr-2" />
             Sign out
@@ -100,8 +100,11 @@ export function Layout() {
       </div>
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <main className="flex-1 overflow-y-auto p-8">
+      <div className="flex-1 flex flex-col overflow-hidden relative">
+        {/* Subtle background glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-indigo-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+        
+        <main className="flex-1 overflow-y-auto p-8 relative z-10">
           <Outlet />
         </main>
       </div>

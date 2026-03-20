@@ -60,11 +60,11 @@ export function DeepAnalysis() {
 
   return (
     <div className="max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-        <Brain className="h-8 w-8 text-indigo-600 mr-3" />
+      <h1 className="text-3xl font-bold text-white mb-6 flex items-center">
+        <Brain className="h-8 w-8 text-indigo-500 mr-3" />
         Deep Legal Analysis
       </h1>
-      <p className="text-gray-600 mb-8">
+      <p className="text-gray-400 mb-8">
         Powered by Gemini Pro with High Thinking Level for your most complex legal scenarios.
       </p>
 
@@ -73,7 +73,7 @@ export function DeepAnalysis() {
           <textarea
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="block w-full p-4 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm min-h-[160px]"
+            className="block w-full p-4 border border-gray-700 bg-gray-900 text-white rounded-lg focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm min-h-[160px]"
             placeholder="Describe the complex legal scenario, including all relevant facts, parties, and specific legal questions..."
           />
         </div>
@@ -96,18 +96,18 @@ export function DeepAnalysis() {
       </form>
 
       {response && (
-        <div className="bg-white shadow sm:rounded-lg overflow-hidden">
-          <div className="px-4 py-5 sm:px-6 border-b border-gray-200 flex justify-between items-center">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Analysis Results</h3>
+        <div className="bg-gray-900 shadow-xl sm:rounded-xl border border-gray-800 overflow-hidden">
+          <div className="px-4 py-5 sm:px-6 border-b border-gray-800 flex justify-between items-center">
+            <h3 className="text-lg leading-6 font-medium text-white">Analysis Results</h3>
             <button
               onClick={saveCase}
-              className="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              className="inline-flex items-center px-3 py-1.5 border border-gray-700 shadow-sm text-sm font-medium rounded-md text-gray-300 bg-gray-800 hover:bg-gray-700"
             >
               <Save className="h-4 w-4 mr-2" />
               Save to Cases
             </button>
           </div>
-          <div className="px-4 py-5 sm:p-6 prose max-w-none">
+          <div className="px-4 py-5 sm:p-6 prose prose-invert max-w-none">
             <ReactMarkdown>{response}</ReactMarkdown>
           </div>
         </div>

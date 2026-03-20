@@ -69,8 +69,8 @@ export function LegalResearch() {
 
   return (
     <div className="max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Deep Legal Research</h1>
-      <p className="text-gray-600 mb-8">
+      <h1 className="text-3xl font-bold text-white mb-6">Deep Legal Research</h1>
+      <p className="text-gray-400 mb-8">
         Powered by Gemini Pro with High Thinking Level and Google Search Grounding.
       </p>
 
@@ -82,7 +82,7 @@ export function LegalResearch() {
           <textarea
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm min-h-[120px]"
+            className="block w-full pl-10 pr-3 py-3 border border-gray-700 bg-gray-900 text-white rounded-lg focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm min-h-[120px]"
             placeholder="Describe your legal issue, case, or question in detail..."
           />
         </div>
@@ -105,29 +105,29 @@ export function LegalResearch() {
       </form>
 
       {response && (
-        <div className="bg-white shadow sm:rounded-lg overflow-hidden">
-          <div className="px-4 py-5 sm:px-6 border-b border-gray-200 flex justify-between items-center">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Research Findings</h3>
+        <div className="bg-gray-900 shadow-xl sm:rounded-xl border border-gray-800 overflow-hidden">
+          <div className="px-4 py-5 sm:px-6 border-b border-gray-800 flex justify-between items-center">
+            <h3 className="text-lg leading-6 font-medium text-white">Research Findings</h3>
             <button
               onClick={saveCase}
-              className="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              className="inline-flex items-center px-3 py-1.5 border border-gray-700 shadow-sm text-sm font-medium rounded-md text-gray-300 bg-gray-800 hover:bg-gray-700"
             >
               <Save className="h-4 w-4 mr-2" />
               Save to Cases
             </button>
           </div>
-          <div className="px-4 py-5 sm:p-6 prose max-w-none">
+          <div className="px-4 py-5 sm:p-6 prose prose-invert max-w-none">
             <ReactMarkdown>{response}</ReactMarkdown>
           </div>
           
           {citations.length > 0 && (
-            <div className="px-4 py-4 sm:px-6 bg-gray-50 border-t border-gray-200">
-              <h4 className="text-sm font-medium text-gray-900 mb-3">Sources & Citations:</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
+            <div className="px-4 py-4 sm:px-6 bg-gray-800/50 border-t border-gray-800">
+              <h4 className="text-sm font-medium text-white mb-3">Sources & Citations:</h4>
+              <ul className="space-y-2 text-sm text-gray-400">
                 {citations.map((chunk, idx) => (
                   chunk.web?.uri && (
                     <li key={idx}>
-                      <a href={chunk.web.uri} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline">
+                      <a href={chunk.web.uri} target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300 hover:underline">
                         {chunk.web.title || chunk.web.uri}
                       </a>
                     </li>
