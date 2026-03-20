@@ -1,0 +1,141 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user of the legal advisor app.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "The user's unique identifier."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The user's email address."
+        },
+        "name": {
+          "type": "string",
+          "description": "The user's full name."
+        },
+        "role": {
+          "type": "string",
+          "enum": ["user", "admin"],
+          "description": "The user's role."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the user was created."
+        }
+      },
+      "required": ["uid", "email", "name", "role", "createdAt"]
+    },
+    "LegalCase": {
+      "title": "Legal Case",
+      "description": "A saved legal research case.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The ID of the user who saved the case."
+        },
+        "title": {
+          "type": "string",
+          "description": "A short title for the case."
+        },
+        "query": {
+          "type": "string",
+          "description": "The user's original query."
+        },
+        "response": {
+          "type": "string",
+          "description": "The AI's response."
+        },
+        "citations": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of citations or URLs."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the case was saved."
+        }
+      },
+      "required": ["userId", "title", "query", "response", "createdAt"]
+    },
+    "LegalDocument": {
+      "title": "Legal Document",
+      "description": "A drafted legal document.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The ID of the user who drafted the document."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the document."
+        },
+        "content": {
+          "type": "string",
+          "description": "The drafted document content."
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of document (e.g., contract, motion)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the document was drafted."
+        }
+      },
+      "required": ["userId", "title", "content", "type", "createdAt"]
+    },
+    "ChatSession": {
+      "title": "Chat Session",
+      "description": "A saved chat session.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The ID of the user."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the chat."
+        },
+        "messages": {
+          "type": "string",
+          "description": "JSON stringified array of messages."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the chat started."
+        }
+      },
+      "required": ["userId", "title", "messages", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Stores user profiles."
+    },
+    "/cases/{caseId}": {
+      "schema": { "$ref": "#/entities/LegalCase" },
+      "description": "Stores saved legal research cases."
+    },
+    "/documents/{documentId}": {
+      "schema": { "$ref": "#/entities/LegalDocument" },
+      "description": "Stores drafted legal documents."
+    },
+    "/chats/{chatId}": {
+      "schema": { "$ref": "#/entities/ChatSession" },
+      "description": "Stores chat sessions."
+    }
+  }
+}

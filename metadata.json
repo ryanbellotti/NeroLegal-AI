@@ -1,0 +1,9 @@
+{
+  "name": "Lexi - AI Legal Advisor",
+  "description": "Comprehensive legal advisor app with access to 9M+ legal decisions, document drafting, voice consultation, and local resources.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}

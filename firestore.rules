@@ -1,0 +1,200 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: users
+    // Document ID: {userId}
+    // Fields:
+    //   - uid: string (required, immutable) - User's unique identifier
+    //   - email: string (required) - User's email address
+    //   - name: string (required) - User's full name
+    //   - role: string (required) - User's role ('user' or 'admin')
+    //   - createdAt: string (required, immutable) - Creation timestamp
+    //
+    // Collection: cases
+    // Document ID: {caseId}
+    // Fields:
+    //   - userId: string (required, immutable) - Owner's ID
+    //   - title: string (required) - Case title
+    //   - query: string (required) - Original query
+    //   - response: string (required) - AI response
+    //   - citations: list (optional) - List of citations
+    //   - createdAt: string (required, immutable) - Creation timestamp
+    //
+    // Collection: documents
+    // Document ID: {documentId}
+    // Fields:
+    //   - userId: string (required, immutable) - Owner's ID
+    //   - title: string (required) - Document title
+    //   - content: string (required) - Document content
+    //   - type: string (required) - Document type
+    //   - createdAt: string (required, immutable) - Creation timestamp
+    //
+    // Collection: chats
+    // Document ID: {chatId}
+    // Fields:
+    //   - userId: string (required, immutable) - Owner's ID
+    //   - title: string (required) - Chat title
+    //   - messages: string (required) - JSON stringified messages
+    //   - createdAt: string (required, immutable) - Creation timestamp
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isDocOwner() {
+      return isAuthenticated() && request.auth.uid == resource.data.userId;
+    }
+
+    function uidUnchanged() {
+      return !('uid' in request.resource.data) || request.resource.data.uid == request.auth.uid;
+    }
+
+    function uidNotModified() {
+      return !('uid' in request.resource.data) || request.resource.data.uid == resource.data.uid;
+    }
+
+    function userIdUnchanged() {
+      return !('userId' in request.resource.data) || request.resource.data.userId == request.auth.uid;
+    }
+
+    function userIdNotModified() {
+      return !('userId' in request.resource.data) || request.resource.data.userId == resource.data.userId;
+    }
+
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    function validStringLength(field, minLen, maxLen) {
+      return request.resource.data[field] is string &&
+        request.resource.data[field].size() >= minLen &&
+        request.resource.data[field].size() <= maxLen;
+    }
+
+    function isValidEmail(email) {
+      return email is string &&
+        email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    function isValidDateString(dateStr) {
+      return dateStr is string &&
+        dateStr.matches("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.*Z?$");
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+          (request.auth.token.email == "RyanBellotti@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function areImmutableFieldsUnchanged(fields) {
+      return !request.resource.data.diff(resource.data).affectedKeys().hasAny(fields);
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+
+    function isValidUser(data) {
+      return hasOnlyAllowedFields(['uid', 'email', 'name', 'role', 'createdAt']) &&
+             hasRequiredFields(['uid', 'email', 'name', 'role', 'createdAt']) &&
+             validStringLength('uid', 1, 128) &&
+             validStringLength('name', 1, 100) &&
+             isValidEmail(data.email) &&
+             data.role in ['user', 'admin'] &&
+             isValidDateString(data.createdAt);
+    }
+
+    function isValidCase(data) {
+      return hasOnlyAllowedFields(['userId', 'title', 'query', 'response', 'citations', 'createdAt']) &&
+             hasRequiredFields(['userId', 'title', 'query', 'response', 'createdAt']) &&
+             validStringLength('userId', 1, 128) &&
+             validStringLength('title', 1, 200) &&
+             validStringLength('query', 1, 5000) &&
+             validStringLength('response', 1, 100000) &&
+             (!('citations' in data) || (data.citations is list && data.citations.size() <= 100)) &&
+             isValidDateString(data.createdAt);
+    }
+
+    function isValidDocument(data) {
+      return hasOnlyAllowedFields(['userId', 'title', 'content', 'type', 'createdAt']) &&
+             hasRequiredFields(['userId', 'title', 'content', 'type', 'createdAt']) &&
+             validStringLength('userId', 1, 128) &&
+             validStringLength('title', 1, 200) &&
+             validStringLength('content', 1, 1000000) &&
+             validStringLength('type', 1, 100) &&
+             isValidDateString(data.createdAt);
+    }
+
+    function isValidChat(data) {
+      return hasOnlyAllowedFields(['userId', 'title', 'messages', 'createdAt']) &&
+             hasRequiredFields(['userId', 'title', 'messages', 'createdAt']) &&
+             validStringLength('userId', 1, 128) &&
+             validStringLength('title', 1, 200) &&
+             validStringLength('messages', 1, 1000000) &&
+             isValidDateString(data.createdAt);
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isAuthenticated() && isValidUser(request.resource.data) && 
+                    uidUnchanged() && 
+                    ((isOwner(userId) && request.resource.data.role == 'user') || isAdmin());
+      allow update: if isAuthenticated() && isValidUser(request.resource.data) && 
+                    uidNotModified() && 
+                    areImmutableFieldsUnchanged(['createdAt']) &&
+                    ((isOwner(userId) && request.resource.data.role == resource.data.role) || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    match /cases/{caseId} {
+      allow read: if isDocOwner() || isAdmin();
+      allow create: if isAuthenticated() && isValidCase(request.resource.data) && userIdUnchanged();
+      allow update: if isAuthenticated() && isValidCase(request.resource.data) && 
+                    isDocOwner() && userIdNotModified() && 
+                    areImmutableFieldsUnchanged(['createdAt']);
+      allow delete: if isDocOwner() || isAdmin();
+    }
+
+    match /documents/{documentId} {
+      allow read: if isDocOwner() || isAdmin();
+      allow create: if isAuthenticated() && isValidDocument(request.resource.data) && userIdUnchanged();
+      allow update: if isAuthenticated() && isValidDocument(request.resource.data) && 
+                    isDocOwner() && userIdNotModified() && 
+                    areImmutableFieldsUnchanged(['createdAt']);
+      allow delete: if isDocOwner() || isAdmin();
+    }
+
+    match /chats/{chatId} {
+      allow read: if isDocOwner() || isAdmin();
+      allow create: if isAuthenticated() && isValidChat(request.resource.data) && userIdUnchanged();
+      allow update: if isAuthenticated() && isValidChat(request.resource.data) && 
+                    isDocOwner() && userIdNotModified() && 
+                    areImmutableFieldsUnchanged(['createdAt']);
+      allow delete: if isDocOwner() || isAdmin();
+    }
+  }
+}
